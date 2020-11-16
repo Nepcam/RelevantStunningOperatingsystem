@@ -26,3 +26,36 @@ class MainClass
   }
 }
 
+public interface ILight
+{
+    void SwitchOn();
+    void SwitchOff();
+    bool IsOn();
+}
+
+public class OverheadLight : ILight
+{
+    private bool isOn;
+    public bool IsOn() => isOn;
+    public void SwitchOff() => isOn = false;
+    public void SwitchOn() => isOn = true;
+
+    public override string ToString() => $"The light is {(isOn ? "on" : "off")}";
+}
+
+public interface ITimerLight : ILight
+{
+    Task TurnOnFor(int duration);
+}
+
+public interface ITimerLight : ILight
+{
+    public async Task TurnOnFor(int duration)
+    {
+        Console.WriteLine("Using the default interface method for the ITimerLight.TurnOnFor.");
+        SwitchOn();
+        await Task.Delay(duration);
+        SwitchOff();
+        Console.WriteLine("Completed ITimerLight.TurnOnFor sequence.");
+    }
+}
